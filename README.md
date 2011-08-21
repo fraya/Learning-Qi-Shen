@@ -10,3 +10,11 @@ Estos programas están incluidos como ejemplos en el mi blog
 [1]: http://en.wikipedia.org/wiki/Qi_%28programming_language%29
 [2]: http://www.lambdassociates.org/
 [3]: http://fernandoraya.posterous.com
+
+RPN Calculator
+--------------
+
+Calculadora en notación inversa polaca.
+
+Directorio:
+    /rpn
