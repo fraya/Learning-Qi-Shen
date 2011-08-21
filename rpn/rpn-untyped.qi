@@ -1,0 +1,17 @@
+(define rpn-aux 
+  [] [Resultado] -> Resultado
+  [] [R | Rs] -> (error "Expresión rpn incorrecta")
+  [N | Exprs] Pila -> (rpn-aux Exprs [N | Pila]) where (number? N)
+  [F | Exprs] [X Y | Z] -> (rpn-aux Exprs [(F Y X) | Z]) where (element? F [+ - * /])
+  _ _ -> (error "Expresión rpn incorrecta"))
+
+(define rpn
+  Exprs -> (rpn-aux Exprs []))
+
+(define calculadora-rpn
+  fin -> ok
+  comenzar -> (do (output "Introduzca una expresión RPN: ")
+			  (output "Resultado: ~A~%" (rpn (input)))
+			  (if (y-or-n? "Continuar? ") 
+			      (calculadora-rpn comenzar) 
+			      (calculadora-rpn fin))))
