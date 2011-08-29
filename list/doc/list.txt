@@ -1,0 +1,278 @@
+List functions
+==============
+Fernando Raya <fernandoraya@gmail.com>
+
+Lists functions for Qi footnote:[http://www.lambdaassociates.com] 
+programming language.
+
+.Licence
+* LGPL (see http://www.gnu.org/licenses/lgpl.html)
+
+.Requires
+* Nothing
+
+.Exports
+
+* <<drop>>
+* <<drop-while>>
+* <<exist>>
+* <<filter>> 
+* <<foldl>>
+* <<foldr>>
+* <<for-all>>
+* <<random-element>>
+* <<range>> 
+* <<take>> 
+* <<take-while>>
+* <<zip>> 
+* <<zip-with>>
+
+
+[[do-times]]
+do-times
+--------
+
+Examples:
+[source,lisp]
+----------------------------------
+(1+) (do-times 3 (/. X (print X)))
+[1 2 3] : (list number) 
+----------------------------------
+
+
+[[drop]]
+drop
+----
+
+Drop the first _N_ elements of a list _L_ and returns the rest.
+
+.Example
+[source,lisp]
+-----------------------------
+(1+) (drop 3 [1 2 3 4 5 6 7])
+[4 5 6 7] : (list number)
+
+(2+) (drop 5 [1 2])
+[] : (list number)
+-----------------------------
+ 
+
+[[drop-while]]
+drop-while
+----------
+
+Drop elements of a list _L_ while the predicate _P_ is _true_ or
+the list _L_ is empty.
+
+.Example
+[source,lisp]
+------------------------------------------------
+(1+) (drop-while (/. X (> X 3)) [7 6 5 4 3 2 1])
+[3 2 1] : (list number)
+------------------------------------------------
+
+
+[[exists]]
+exists
+------
+
+Returns _true_ if the predicate _P_ is _true_ for at least 
+one element of _L_, _false_ otherwise.
+
+.Example
+[source,lisp]
+-------------------------------------
+(1+) (exists (/. X (= X 3)) [2 4 6])
+false : boolean
+
+(2+) (exists (/. X (= X 6)) [2 5 6])
+true : boolean
+-------------------------------------
+
+
+[[for-all]]
+for-all
+-------
+
+Returns _true_ if predicate _P_ is true for all elements of _L_,
+_false_ otherwise.
+
+.Example
+[source, lisp]
+-------------------------------------------------------------
+(1+) (for-all (/. N (>= (* N N) N)) [-3 -2 -1 0 1 3 5 7]) ;; <1>
+true : boolean
+
+(2+) (for-all odd? [1 3 4 7])
+false: boolean
+-------------------------------------------------------------
+
+<1> ∀ n ∈ N: n^2 ≥ n.
+
+
+[[foldl]]
+foldl
+-----
+
+Iterate a function over a list and return a value. See example for
+difference between _foldl_ and _foldr_.
+
+.Example
+[source,lisp]
+----------------------------------------------------------------------
+(1+) (foldl + 0 [1 2 3])
+6 : number
+
+(2+) (foldl (/. X Y (make-string "(f ~A ~A)" X Y)) "0" [1 2 3 4 5])
+"(f (f (f (f (f 0 1) 2) 3) 4) 5)" : string
+----------------------------------------------------------------------
+
+
+[[foldr]]
+foldr
+-----
+
+Iterate a function over a list returning a value. See example for
+difference between _foldl_ and _foldr_.
+
+.Example
+[source,lisp]
+------------------------
+(1+) (foldr * [1 2 3] 1)
+6 : number
+------------------------
+
+.Example
+[source,lisp]
+-----------------------------------------------------------------------
+(2+) (foldr (/. X Y (make-string "(f ~A ~A)" X Y)) [1 2 3 4 5] "0")
+"(f 1 (f 2 (f 3 (f 4 (f 5 0)))))" : string
+-----------------------------------------------------------------------
+
+
+[[take]]
+take
+----
+
+Takes n elements from a list.
+
+.Example
+[source,lisp]
+-----------------------------
+(1+) (take 3 [1 2 3 4 5])
+[1 2 3] : (list number)
+-----------------------------
+
+
+[[filter]]
+filter
+------
+
+Take the elements of a list that satisfies a predicate function.
+
+.Example
+[source,lisp]
+--------------------------------
+(1+) (filter odd? [1 2 3 4])
+[1 3] : (list number)
+--------------------------------
+
+
+[[random-element]]
+random-element
+--------------
+
+Return an element from a list at random.
+
+.Example
+[source,lisp]
+-----------------------------------
+(1+) (random-element [1 2 3 4])
+3 : number
+-----------------------------------
+
+
+[[range]]
+range
+-----
+
+Return a list containing an arithmetic progression.
+
+.Example
+[source,lisp]
+-----------------------------------
+(1+) (range 1 10)
+[1 2 3 4 5 6 7 8 9] : (list number)
+(2+) (range 5 3)
+[3 4 5] : (list number)
+-----------------------------------
+ 
+
+[[take-while]]
+take-while
+----------
+
+Takes a predicate _P_ and a list _L_, and returns the longest (possibly
+empty) list with the elements that satisfies _P_.
+
+.Example
+[source,lisp]
+----------------------------------------------
+(1+) (take-while (/. X (< X 5)) [1 2 3 4 5 6])
+[1 2 3 4] : (list number)
+
+(2+) (take-while (/. X (> X 3)) [4 5 2 6 7])
+[4 5] : (list number)
+----------------------------------------------
+
+
+[[zip]]
+zip
+---
+
+Compress two list in one list.
+Each element of the new list is a tuple with an element from the 
+first list and the other from the second. 
+
+.Example
+[source,lisp]
+-----------------------------------------------------------
+(1+) (zip [1 3 5] [2 4 6])
+[(@p 1 2) (@p 3 4) (@p 5 6)] : (list (number * number))
+-----------------------------------------------------------
+
+
+[[zip-with]]
+zip-with
+--------
+
+Compress two list in one list with the transformation of 
+function F.  The functions stops if one of the lists is empty.
+
+.Example
+[source,lisp]
+-------------------------------------
+(1+) (zip-with + [1 3 5] [2 4 6])
+[3 7 11] : (list number)
+
+(2+) (zip-with + [1 3 5] [2])
+[3] : (list number)
+-------------------------------------
+
+
+References
+----------
+[bibliography]
+- [[[fpq]]] Mark Tarver. 'Functional Programming in Qi'. Second Edition. 2008.
+Free University Press. ISBN 978184426549-7.
+- [[[hsoe]]] Paul Hudak. 'Haskell School of Expression'. Cambridge 
+University Press. ISBN 978-0-521-64408-2.
+- [[[obi]]] 'Ocaml Batteries Included'. List reference. 
+http://thelema.github.com/batteries-included/hdoc/BatList.html.
+- [[[oca]]] 'Ocaml Standard Library'. List reference. 
+http://caml.inria.fr/pub/docs/manual-ocaml/libref/List.html
+- Wikipedia. 'Universal quantification'. 
+http://en.wikipedia.org/wiki/Universal_quantification
+- Wikipedia. 'Fold (higher-order function)'.
+'http://en.wikipedia.org/wiki/Fold_(higher-order_function)'
+
