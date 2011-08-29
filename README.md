@@ -18,3 +18,13 @@ Calculadora en notación inversa polaca.
 
 Directorio:
     /rpn
+
+Funciones para listas
+---------------------
+
+Funciones útiles con listas.
+
+Directorio:
+    /list
+    /list/src Código fuente
+    /list/doc Documentación
