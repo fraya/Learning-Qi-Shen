@@ -24,6 +24,7 @@ programming language.
 * <<for-all>>
 * <<random-element>>
 * <<range>> 
+* <<range-step>>
 * <<take>> 
 * <<take-while>>
 * <<zip>> 
@@ -296,7 +297,7 @@ Return a list containing an arithmetic progression.
 [source,lisp]
 -----------------------------------
 (1+) (range 1 10)
-[1 2 3 4 5 6 7 8 9] : (list number)
+[1 2 3 4 5 6 7 8 9 10] : (list number)
 (2+) (range 5 3)
 [3 4 5] : (list number)
 -----------------------------------
@@ -306,12 +307,44 @@ Return a list containing an arithmetic progression.
 (define range
   {number --> number --> [number]}
   From To -> (range To From) where (> From To)
-  From To -> (range-help From To []))
+  From To -> (range-step-help From To 1 []))
 
-(define range-help
-  {number -->  number --> [number] --> [number]}
-  N N Result -> [N|Result]
-  From To Result -> (range-help From (- To 1) [To | Result]))
+\*
+
+[[range-step]]
+range-step
+----------
+
+Return a list containing an arithmetic progression with a specific step.
+
+.Example
+[source,lisp]
+-----------------------------------
+(1+) (range-step 1 10 1)
+[1 2 3 4 5 6 7 8 9 10] : (list number)
+(2+) (range-step 1 10 2)
+[1 3 5 7 9] : (list number)
+(3+) (range-step 2 10 2)
+[2 4 6 8 10] : (list number)
+(4+) (range-step 5 3 1)
+[3 4 5] : (list number)
+(5+) (range-step 4 20 2)
+[4 6 8 10 12 14 16 18 20] : (list number)
+(6+) (range-step 6 20 3)
+[6 9 12 15 18] : (list number)
+-----------------------------------
+*\
+ 
+(define range-step
+  {number --> number --> number --> [number]}
+  From To Step -> (range-step-help To From Step []) where (> From To)
+  From To Step -> (range-step-help From To Step []))
+
+(define range-step-help
+  {number -->  number --> number --> [number] --> [number]}
+  From To Step Result -> (reverse Result)     where (> From To)
+  From To Step Result -> (reverse [From|Result]) where (= From To)
+  From To Step Result -> (range-step-help (+ From Step) To Step [From|Result]))
 
 \*
 
