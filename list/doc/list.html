@@ -592,6 +592,11 @@ Nothing
 </li>
 <li>
 <p>
+<a href="#list-init">[list-init]</a>
+</p>
+</li>
+<li>
+<p>
 <a href="#random-element">[random-element]</a>
 </p>
 </li>
@@ -750,6 +755,22 @@ http://www.lorenzobettini.it
 http://www.gnu.org/software/src-highlite -->
 <pre><tt><span style="color: #FF0000">(</span><span style="color: #993399">2</span>+<span style="color: #FF0000">)</span> <span style="color: #FF0000">(</span>foldr <span style="color: #FF0000">(</span>/. X Y <span style="color: #FF0000">(</span>make-string <span style="color: #FF0000">"(f ~A ~A)"</span> X Y<span style="color: #FF0000">))</span> [<span style="color: #993399">1</span> <span style="color: #993399">2</span> <span style="color: #993399">3</span> <span style="color: #993399">4</span> <span style="color: #993399">5</span>] <span style="color: #FF0000">"0"</span><span style="color: #FF0000">)</span>
 <span style="color: #FF0000">"(f 1 (f 2 (f 3 (f 4 (f 5 0)))))"</span> : string</tt></pre></div></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="init">list-init</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Creates a list with <em>N</em> elements of type <em>A</em> created by a function <em>F</em>,
+where <em>F</em> is <em>(number -&#8594; A)</em>.</p></div>
+<div class="listingblock">
+<div class="title">Example</div>
+<div class="content">
+<pre><tt>(1+) (init 5 (* I 3)))
+[3 6 9 12 15] : (list number)
+(2+) (init 3 (/. I (+ I 2)))
+[3 4 5] : (list number)
+(3+)</tt></pre>
+</div></div>
 </div>
 </div>
 <div class="sect1">
@@ -933,7 +954,7 @@ Wikipedia. <em>Fold (higher-order function)</em>.
 <div id="footnotes"><hr /></div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2011-08-30 12:37:23 CEST
+Last updated 2011-09-02 14:11:07 CEST
 </div>
 </div>
 </body>

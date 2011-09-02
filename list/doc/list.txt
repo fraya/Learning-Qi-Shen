@@ -1,3 +1,4 @@
+
 List functions
 ==============
 Fernando Raya <fernandoraya@gmail.com>
@@ -20,6 +21,7 @@ programming language.
 * <<foldl>>
 * <<foldr>>
 * <<for-all>>
+* <<list-init>>
 * <<random-element>>
 * <<range>> 
 * <<range-step>>
@@ -149,6 +151,23 @@ difference between _foldl_ and _foldr_.
 (2+) (foldr (/. X Y (make-string "(f ~A ~A)" X Y)) [1 2 3 4 5] "0")
 "(f 1 (f 2 (f 3 (f 4 (f 5 0)))))" : string
 -----------------------------------------------------------------------
+
+
+[[init]]
+list-init
+---------
+
+Creates a list with _N_ elements of type _A_ created by a function _F_,
+where _F_ is _(number --> A)_.
+
+.Example
+-----------------------------
+(1+) (init 5 (* I 3)))
+[3 6 9 12 15] : (list number)
+(2+) (init 3 (/. I (+ I 2)))
+[3 4 5] : (list number)
+(3+)
+-----------------------------
 
 
 [[take]]
