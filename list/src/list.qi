@@ -22,6 +22,7 @@ programming language.
 * <<foldl>>
 * <<foldr>>
 * <<for-all>>
+* <<list-init>>
 * <<random-element>>
 * <<range>> 
 * <<range-step>>
@@ -216,6 +217,35 @@ difference between _foldl_ and _foldr_.
   {(A --> B --> B) --> [A] --> B --> B}
   F [] Acc -> Acc
   F [X|Xs] Acc -> (F X (foldr F Xs Acc)))
+
+\*
+
+[[init]]
+list-init
+---------
+
+Creates a list with _N_ elements of type _A_ created by a function _F_,
+where _F_ is _(number --> A)_.
+
+.Example
+-----------------------------
+(1+) (init 5 (* I 3)))
+[3 6 9 12 15] : (list number)
+(2+) (init 3 (/. I (+ I 2)))
+[3 4 5] : (list number)
+(3+)
+-----------------------------
+
+*\
+
+(define init
+  {number --> (number --> A) --> [A]}
+  N F -> (init-help N F []))
+
+(define init-help
+  {number --> (number --> A) --> [A] --> [A]}
+  0 F R -> R
+  N F R -> (init-help (- N 1) F [(F N)|R]))
 
 \*
 
